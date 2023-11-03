@@ -15,7 +15,7 @@ apt-get install -y \
         python-apt \
         python3-pip \
         curl \
-        unzip \
+        unzip 
 
 pip install awscli
 pip install credstash

@@ -1,0 +1,19 @@
+ami:
+#  source_ami: ami-e6d5d2f1
+  region: us-east-1
+#  instance_type: c4.2xlarge
+  ssh_username: ubuntu
+  ssh_timeout: 10m
+  ena_support: True
+#  ssh_interface: private_ip
+#  associate_public_ip_address: True
+#  subnet_id: subnet-4cfb7f28
+#  security_group_id: sg-abef6cd9
+#  iam_instance_profile: PackerRole
+
+scripts:
+  - base.sh
+  - airflow.sh
+  - monitoring.sh
+
+execute: "echo ubuntu | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"

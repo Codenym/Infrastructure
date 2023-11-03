@@ -7,10 +7,5 @@ resource "aws_instance" "airflow" {
   tags = {
     Name = "airflow-instance"
   }
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo apt-get update
-              sudo apt-get install python3-pip -y
-              pip3 install apache-airflow
-              EOF
+
 }

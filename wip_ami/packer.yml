@@ -1,0 +1,19 @@
+ami:
+  source_ami: xxx
+  region: us-east-1
+  instance_type: xxx
+  ssh_username: ubuntu
+  ssh_timeout: 10m
+  ena_support: True
+  ssh_interface: private_ip
+  associate_public_ip_address: True
+  subnet_id: xxx
+  security_group_id: xxx
+  iam_instance_profile: PackerRole
+
+scripts:
+  - base.sh
+  - dagster.sh
+  - monitoring.sh
+
+execute: "echo ubuntu | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"

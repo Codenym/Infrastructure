@@ -2,7 +2,7 @@ terraform {
   cloud {
     organization = "codenym"
     workspaces {
-      name = "aws-airflow"
+      name = "codenym-dagster"
     }
   }
 

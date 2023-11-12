@@ -1,11 +1,3 @@
-resource "aws_s3_bucket" "datanym-pipeline" {
-  bucket = "datanym-pipeline"
-
-  tags = {
-    Name        = "Dagster Data Pipeline Bucket"
-    Environment = "Production"
-  }
-}
 
 resource "aws_iam_user" "dagster_user" {
   name = "dagster_user"
@@ -46,8 +38,8 @@ data "aws_iam_policy_document" "dagster_bucket_policy_document" {
       "s3:*",
     ]
     resources = [
-      aws_s3_bucket.datanym-pipeline.arn,
-      "${aws_s3_bucket.datanym-pipeline.arn}/*"
+      var.bucket_arn,
+      "${var.bucket_arn}/*"
     ]
   }
 }

@@ -43,3 +43,27 @@ data "aws_iam_policy_document" "dagster_bucket_policy_document" {
     ]
   }
 }
+
+
+resource "aws_iam_role" "lambda_datasette_role" {
+  name = "lambda_datasette_role"
+
+  assume_role_policy = jsonencode({
+    Version   = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com",
+        },
+      },
+    ],
+  })
+}
+
+# Attach the basic execution role policy to the IAM role
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+  role       = aws_iam_role.lambda_datasette_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}

@@ -1,0 +1,3 @@
+datasette
+mangum
+pysqlite3-binary

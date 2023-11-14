@@ -54,3 +54,17 @@ module "app" {
   env    = var.env
   db_url = module.database.db_url
 }
+
+module "fixtures_datasette1" {
+  source             = "./datasette"
+  function_name      = "fixtures_datasette1"
+  deployment_directory = "inputs/datasette_deployment/fixtures/deployment_package"
+  lambda_role_arn    = module.iam.lambda_role_arn
+}
+
+module "fixtures_datasette2" {
+  source             = "./datasette"
+  function_name      = "fixtures_datasette2"
+  deployment_directory = "inputs/datasette_deployment/fixtures/deployment_package"
+  lambda_role_arn    = module.iam.lambda_role_arn
+}

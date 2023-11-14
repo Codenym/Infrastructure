@@ -2,7 +2,7 @@
 
 set -e
 module_name=${1:?"Missing arg 1 for module_name"} # directory stuff is in (lambda_function.py, module_name.db, requirements.txt)
-docker_container=${2:?"Missing Docker Container Name - Build the Dockerfile and provide the tag name"} 
+docker_container=${2:?"Missing Docker Container Name - Build the Dockerfile and provide the tag name (Usually requirements_binaries)"} 
 database_name=${3:-$module_name.db} # Name of sqlite db file
 output_directory=${4:-deployment_package} # Name of folder to put all stuff and dep wheels in that tf will point at
 python_function_file=${5:-lambda_function.py} #Name of python file where lambda handler is

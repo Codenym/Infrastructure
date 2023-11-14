@@ -1,5 +1,9 @@
 # Datasette Deploy to Lambda Function 
 
+## Background
+
+Basically all of this is from the steps described [here](https://til.simonwillison.net/awslambda/asgi-mangum) by datasette creator [Simon Willison](https://simonwillison.net/).  I converted some of his stuff to terraform and structured it for convenience, but there's no new concepts here that aren't in his guide.  If you want to understand this, it'd be best to start with his walkthrough first.
+
 ## Setup
 
 You should have a directory with three items in it for your datasette deploy.  Once you run the scrip below you will have a new directory automatically created for you (`deployment_package`).  For example, for the `fixtures` project it would looke like this.
@@ -20,8 +24,9 @@ You should have a directory with three items in it for your datasette deploy.  O
 
 ## Build Module
 
+This script runs will run the requirements.txt file and package those dependencies with the sqlite database and the lambda function in the format required by AWS lambda.  All deploy and infrastructure is done in terraform and not here.
 ```bash
-docker build -t requirements_binaries . 
+docker build -t requirements_binaries . # Only if you haven't built recently
 create_deployment_package.sh <folder> requirements_binaries
 ```
 

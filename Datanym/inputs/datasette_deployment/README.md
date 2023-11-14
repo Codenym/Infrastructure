@@ -25,6 +25,7 @@ You should have a directory with three items in it for your datasette deploy.  O
 ## Build Module
 
 This script runs will run the requirements.txt file and package those dependencies with the sqlite database and the lambda function in the format required by AWS lambda.  All deploy and infrastructure is done in terraform and not here.
+
 ```bash
 docker build -t requirements_binaries . # Only if you haven't built recently
 create_deployment_package.sh <folder> requirements_binaries
@@ -32,7 +33,7 @@ create_deployment_package.sh <folder> requirements_binaries
 
 ## Deploy in Terraform
 
-Add module to `Datanym/main.tf`.  It will look at this to give a name and point to the deployment directory that was created by the scrip int he build module section.
+Add module to `Datanym/main.tf`.  It will look at this to give a name and point to the deployment directory that was created by the scrip in the build module section.
 
 ```terraform
 module "fixtures_datasette1" {
@@ -49,5 +50,5 @@ You will then need to initialize and deploy using `terraform init` and `terrafor
 ## Updating the deploy
 
 1. Update the deployment directory by following the steps in the Build Module section
-2. Run `Terraform apply`.  Terraform hashes the directory when zipping so will detect if new deploy is needed
+2. Run `Terraform apply`.  Terraform hashes the directory when zipping and will detect if new deploy is needed based on state
 

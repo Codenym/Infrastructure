@@ -32,7 +32,7 @@ create_deployment_package.sh <folder> requirements_binaries
 
 ## Deploy in Terraform
 
-Add module to Datanym/main.tf.  It will look at this to give a name and point to the deployment directory that was created by the scrip int he build module section.
+Add module to `Datanym/main.tf`.  It will look at this to give a name and point to the deployment directory that was created by the scrip int he build module section.
 
 ```terraform
 module "fixtures_datasette1" {
@@ -49,5 +49,5 @@ You will then need to initialize and deploy using `terraform init` and `terrafor
 ## Updating the deploy
 
 1. Update the deployment directory by following the steps in the Build Module section
-2. Run Terraform apply.  Terraform hashes the directory when zipping so will detect if new deploy is needed
+2. Run `Terraform apply`.  Terraform hashes the directory when zipping so will detect if new deploy is needed
 

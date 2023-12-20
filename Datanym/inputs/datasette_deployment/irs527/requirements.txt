@@ -1,0 +1,4 @@
+datasette
+mangum
+pysqlite3-binary
+datasette-block-robots

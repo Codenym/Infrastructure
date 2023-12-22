@@ -64,23 +64,33 @@ resource "aws_iam_user_policy_attachment" "Reshift-ETL-User-RS-Attach" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonRedshiftFullAccess"
 }
 
-resource "aws_redshift_cluster" "redshift-cluster-1" {
-  cluster_identifier     = "redshift-cluster-1"
-  database_name          = "dev"
-  iam_roles              = [aws_iam_role.RedshiftRole.arn, ]
-  node_type              = "dc2.large"
-  cluster_type           = "multi-node"
-  number_of_nodes        = 8
-  skip_final_snapshot    = true
-  master_password        = random_string.this.result
-  master_username        = var.db_user
-  port                   = 5439
-  publicly_accessible    = true
-  enhanced_vpc_routing   = false
-  vpc_security_group_ids = [aws_security_group.redshift_security_group.id, ]
-  depends_on = [
-    aws_security_group.redshift_security_group,
-    aws_iam_role.RedshiftRole,
-  ]
+# Create the Redshift Serverless Namespace
+resource "aws_redshiftserverless_namespace" "serverless" {
+  namespace_name      = "redshift-serverless-namespace"
+  db_name             = "redshift-serverless-db"
+  admin_username      = var.db_user
+  admin_user_password = random_string.this.result
+  iam_roles           = [aws_iam_role.RedshiftRole.arn]
+
+  tags = {
+    Name        = "redshift-serverless-namespace"
+  }
 }
 
+################################################
+
+# Create the Redshift Serverless Workgroup
+resource "aws_redshiftserverless_workgroup" "serverless" {
+  depends_on = [aws_redshiftserverless_namespace.serverless]
+
+  namespace_name = aws_redshiftserverless_namespace.serverless.id
+  workgroup_name = "redshift-serverless-workgroup"
+  base_capacity  = 32
+
+  security_group_ids = [ aws_security_group.redshift_security_group.id ]
+  publicly_accessible = true
+
+  tags = {
+    Name        = "redshift-serverless-workgroup"
+  }
+}
